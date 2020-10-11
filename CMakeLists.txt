@@ -89,10 +89,12 @@ list(APPEND SPLA_EXTERNAL_LIBS MPI::MPI_CXX)
 # find BLAS backend for Host computation. Prefer MKL if available.
 find_package(MKL QUIET)
 
-if(SPLA_BUILD_TESTS)
-	set(SPLA_MKL_TARGET mkl::scalapack_mpich_intel_32bit_omp_dyn)
-else()
-	set(SPLA_MKL_TARGET mkl::mkl_intel_32bit_omp_dyn)
+if(SPLA_BLAS_MKL)
+  if(SPLA_BUILD_TESTS)
+    set(SPLA_MKL_TARGET mkl::scalapack_mpich_intel_32bit_omp_dyn)
+  else()
+    set(SPLA_MKL_TARGET mkl::mkl_intel_32bit_omp_dyn)
+  endif()
 endif()
 
 if(TARGET ${SPLA_MKL_TARGET})
